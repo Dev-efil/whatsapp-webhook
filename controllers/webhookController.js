@@ -33,8 +33,8 @@ export const handleReplyMessage = async (req, res) => {
         return res.sendStatus(404);
     }
     else {
-        const ourPhoneNumberId = data.value.metadata.phone_number_id;
-        const userPhoneNumber = data.value.messages[0].from;
+        const ourPhoneNumberId = data[0].changes[0].value.metadata.phone_number_id;
+        const userPhoneNumber = data.changes[0].value.messages[0].from;
         console.log('ourPhoneNumberId',ourPhoneNumberId);
         console.log('userPhoneNumber',userPhoneNumber);
         const apiUrl = `https://graph.facebook.com/v16.0/${ourPhoneNumberId}/messages`;
