@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // To verify the callback url from cloud api
 export const verifyWebhook = async (req, res) => {
-    console.log('verifyWebhook',req.query);
+    console.log('verifyWebhook', req.query);
     try {
         const mode = req.query['hub.mode'];
         const challenge = req.query['hub.challenge'];
@@ -30,28 +30,31 @@ export const handleReplyMessage = async (req, res) => {
     console.log(JSON.stringify(data, null, 2));
 
     if (!data?.[0]?.changes?.[0]?.value?.messages?.[0]) {
+        console.log('handleReplyMessage here');
         return res.sendStatus(404);
     }
     else {
         const ourPhoneNumberId = data[0].changes[0].value.metadata.phone_number_id;
         const userPhoneNumber = data.changes[0].value.messages[0].from;
-        console.log('ourPhoneNumberId',ourPhoneNumberId);
-        console.log('userPhoneNumber',userPhoneNumber);
+        console.log('ourPhoneNumberId', ourPhoneNumberId);
+        console.log('userPhoneNumber', userPhoneNumber);
         const apiUrl = `https://graph.facebook.com/v16.0/${ourPhoneNumberId}/messages`;
-
+        const dataTemplate = JSON.stringify({
+            messaging_product: 'whatsapp',
+            to: userPhoneNumber,
+            text: {
+                body: 'Hello to you!'
+            }
+        })
         try {
             const response = await axios.post(apiUrl,
                 {
-                    messaging_product: 'whatsapp',
-                    to: userPhoneNumber,
-                    text: {
-                        body: 'Hello to you!'
-                    }
+                    data: dataTemplate
                 },
                 {
                     headers: {
                         ContentType: 'application/json',
-                        Authorization: `Bearer ${process.env.ACCESS_TOKEN}`
+                        Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`
                     }
                 }
             );
