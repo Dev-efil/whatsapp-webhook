@@ -11,7 +11,7 @@ export const verifyWebhook = async (req, res) => {
             return res.sendStatus(404);
         }
         if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
-            console.log("challenge",challenge);
+            console.log("challenge", challenge);
             return res.status(200).send(challenge);
         }
         return res.sendStatus(403);
@@ -32,7 +32,8 @@ export const handleReplyMessage = async (req, res) => {
     else {
         const ourPhoneNumberId = data.value.metadata.phone_number_id;
         const userPhoneNumber = data.value.messages[0].from;
-
+        console.log('ourPhoneNumberId',ourPhoneNumberId);
+        console.log('userPhoneNumber',userPhoneNumber);
         const apiUrl = `https://graph.facebook.com/v16.0/${ourPhoneNumberId}/messages`;
 
         try {
