@@ -9,7 +9,6 @@ export const verifyWebhook = async (req, res) => {
         const token = req.query['hub.verify_token'];
 
         if (!mode || !token) {
-            console.log('here');
             return res.sendStatus(404);
         }
         if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
@@ -25,12 +24,10 @@ export const verifyWebhook = async (req, res) => {
 
 // To handle reply message to user
 export const handleReplyMessage = async (req, res) => {
-    console.log('handleReplyMessage', req.body);
     const data = req.body.entry;
     console.log(JSON.stringify(data, null, 2));
 
     if (!data?.[0]?.changes?.[0]?.value?.messages?.[0]) {
-        console.log('handleReplyMessage here');
         return res.sendStatus(404);
     }
     else {
