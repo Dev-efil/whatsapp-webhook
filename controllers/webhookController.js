@@ -11,6 +11,7 @@ export const verifyWebhook = async (req, res) => {
             return res.sendStatus(404);
         }
         if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
+            console.log("challenge",challenge);
             return res.status(200).send(challenge);
         }
         return res.sendStatus(403);
@@ -25,7 +26,7 @@ export const handleReplyMessage = async (req, res) => {
     const data = req.body.entry;
     console.log(JSON.stringify(data, null, 2));
 
-    if (!data?.[0]?.changes?.[0]?.value?.message?.[0]) {
+    if (!data?.[0]?.changes?.[0]?.value?.messages?.[0]) {
         return res.sendStatus(404);
     }
     else {
