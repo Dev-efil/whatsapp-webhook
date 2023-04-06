@@ -11,7 +11,7 @@ export const verifyWebhook = async (req, res) => {
             return res.sendStatus(404);
         }
         if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
-            return res.status(200).send('Webhook received successfully', challenge);
+            return res.status(200).send(challenge);
         }
         return res.sendStatus(403);
     } catch (error) {
@@ -42,7 +42,6 @@ export const handleReplyMessage = async (req, res) => {
                     text: {
                         body: 'Hello to you!'
                     }
-
                 },
                 {
                     headers: {
