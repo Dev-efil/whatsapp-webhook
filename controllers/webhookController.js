@@ -2,12 +2,14 @@ import axios from 'axios';
 
 // To verify the callback url from cloud api
 export const verifyWebhook = async (req, res) => {
+    console.log('verifyWebhook',req.query);
     try {
         const mode = req.query['hub.mode'];
         const challenge = req.query['hub.challenge'];
         const token = req.query['hub.verify_token'];
 
         if (!mode || !token) {
+            console.log('here');
             return res.sendStatus(404);
         }
         if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
@@ -23,6 +25,7 @@ export const verifyWebhook = async (req, res) => {
 
 // To handle reply message to user
 export const handleReplyMessage = async (req, res) => {
+    console.log('handleReplyMessage', req.body);
     const data = req.body.entry;
     console.log(JSON.stringify(data, null, 2));
 
