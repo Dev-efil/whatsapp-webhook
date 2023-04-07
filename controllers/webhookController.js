@@ -57,13 +57,13 @@ export const handleReplyMessage = async (req, res) => {
                     }
                 }
             );
-            console.log(response);
+            console.log('response dataTemplate',response);
             if (response.status !== 200) {
                 return res.send(`Unexpected status code: ${response.status}`);
             }
             return res.sendStatus(200);
         } catch (error) {
-            console.log(error);
+            console.log("out here",error);
             return res.sendStatus(500);
         }
     }
