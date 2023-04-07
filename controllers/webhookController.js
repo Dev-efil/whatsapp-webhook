@@ -36,20 +36,16 @@ export const handleReplyMessage = async (req, res) => {
         console.log('ourPhoneNumberId', ourPhoneNumberId);
         console.log('userPhoneNumber', userPhoneNumber);
         const apiUrl = `https://graph.facebook.com/v16.0/${ourPhoneNumberId}/messages`;
-        const dataTemplate = JSON.stringify({
+        const dataTemplate = {
             messaging_product: 'whatsapp',
-            recipient_type: 'individual',
             to: userPhoneNumber,
             type: 'text',
             text: {
                 body: 'Hello to you!'
             }
-        })
+        }
         try {
-            const response = await axios.post(apiUrl,
-                {
-                    data: dataTemplate
-                },
+            const response = await axios.post(apiUrl, dataTemplate,
                 {
                     headers: {
                         ContentType: 'application/json',
@@ -57,13 +53,13 @@ export const handleReplyMessage = async (req, res) => {
                     }
                 }
             );
-            console.log('response dataTemplate',response);
+            console.log('response dataTemplate', response);
             if (response.status !== 200) {
                 return res.send(`Unexpected status code: ${response.status}`);
             }
             return res.sendStatus(200);
         } catch (error) {
-            console.log("out here",error);
+            console.log("out here", error);
             return res.sendStatus(500);
         }
     }
