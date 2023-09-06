@@ -2,7 +2,7 @@
   "name": "webhook",
   "version": "1.0.0",
   "type": "module",
-  "description": "Yobot is a Node.js webhook that automates tasks in your chat platform.",
+  "description": "Node.js webhook that automates tasks in your chat platform.",
   "main": "server.js",
   "scripts": {
     "start": "node server",
